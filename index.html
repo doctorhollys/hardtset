@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -503,119 +505,155 @@
     `,
         };
 
-        function startTest() {
-            document.getElementById('start-container').style.display = 'none';
-            document.getElementById('question-container').style.display = 'block';
-            showQuestion();
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const resultType = urlParams.get('result');
+        if (resultType) {
+            showResultFromLink(resultType);
         }
+    });
 
-        function showQuestion() {
-            document.getElementById('question-number').textContent = `질문 ${currentQuestion + 1} / ${questions.length}`;
-            document.getElementById('question-text').textContent = questions[currentQuestion].question;
-            document.querySelectorAll('#question-container button')[0].textContent = questions[currentQuestion].answers[0];
-            document.querySelectorAll('#question-container button')[1].textContent = questions[currentQuestion].answers[1];
-        }
+    function showResultFromLink(type) {
+        document.getElementById('start-container').style.display = 'none';
+        document.getElementById('question-container').style.display = 'none';
+        document.getElementById('result-container').style.display = 'block';
 
-   function answerQuestion(answer) {
-    const category = Math.floor(currentQuestion / 5);
-    const categoryKey = ['a', 'b', 'c', 'd'][category];
-    answers[categoryKey] += answer === 0 ? -1 : 1;
+        const resultTypes = {
+            'a+b+c+d+': '이생망 국대',
+            'a+b+c+d-': '카톡 1 배지 수집가',
+            'a+b+c-d+': '갓생 프리터',
+            'a+b+c-d-': '짠테크 실패 전문가',
+            'a+b-c+d+': '잠수 탐지기 켜진 조장',
+            'a+b-c+d-': '자소서 문학도',
+            'a+b-c-d+': '회사 탈출 실패 백수',
+            'a+b-c-d-': '인스타 각도 고수',
+            'a-b+c+d+': '월급 3일 컷 달성러',
+            'a-b+c+d-': '메타버스 부동산 재벌',
+            'a-b+c-d+': '오늘부터 1일 전문가',
+            'a-b+c-d-': '대학 축제 조모임 창시자',
+            'a-b-c+d+': '나만 모르는 밈 제조기',
+            'a-b-c+d-': '정시 합격 논술 치트키',
+            'a-b-c-d+': '등산 전문 첫사랑 패티쉬',
+            'a-b-c-d-': '주식 손실 만회 유튜버'
+        };
 
-    currentQuestion++;
-    if (currentQuestion < questions.length) {
-        showQuestion();
-    } else {
-        showResult();
+        document.getElementById('result-type').textContent = resultTypes[type];
+        document.getElementById('result-description').innerHTML = typeDescriptions[type];
     }
-}
 
-function showResult() {
-    document.getElementById('question-container').style.display = 'none';
-    document.getElementById('result-container').style.display = 'block';
+    function startTest() {
+        document.getElementById('start-container').style.display = 'none';
+        document.getElementById('question-container').style.display = 'block';
+        showQuestion();
+    }
 
-    const type = (answers.a > 0 ? 'a+' : 'a-') +
-                 (answers.b > 0 ? 'b+' : 'b-') +
-                 (answers.c > 0 ? 'c+' : 'c-') +
-                 (answers.d > 0 ? 'd+' : 'd-');
+    function showQuestion() {
+        document.getElementById('question-number').textContent = `질문 ${currentQuestion + 1} / ${questions.length}`;
+        document.getElementById('question-text').textContent = questions[currentQuestion].question;
+        document.querySelectorAll('#question-container button')[0].textContent = questions[currentQuestion].answers[0];
+        document.querySelectorAll('#question-container button')[1].textContent = questions[currentQuestion].answers[1];
+    }
 
-    const resultTypes = {
-        'a+b+c+d+': '이생망 국대',
-        'a+b+c+d-': '카톡 1 배지 수집가',
-        'a+b+c-d+': '갓생 프리터',
-        'a+b+c-d-': '짠테크 실패 전문가',
-        'a+b-c+d+': '잠수 탐지기 켜진 조장',
-        'a+b-c+d-': '자소서 문학도',
-        'a+b-c-d+': '회사 탈출 실패 백수',
-        'a+b-c-d-': '인스타 각도 고수',
-        'a-b+c+d+': '월급 3일 컷 달성러',
-        'a-b+c+d-': '메타버스 부동산 재벌',
-        'a-b+c-d+': '오늘부터 1일 전문가',
-        'a-b+c-d-': '대학 축제 조모임 창시자',
-        'a-b-c+d+': '나만 모르는 밈 제조기',
-        'a-b-c+d-': '정시 합격 논술 치트키',
-        'a-b-c-d+': '등산 전문 첫사랑 패티쉬',
-        'a-b-c-d-': '주식 손실 만회 유튜버'
-    };
+    function answerQuestion(answer) {
+        const category = Math.floor(currentQuestion / 5);
+        const categoryKey = ['a', 'b', 'c', 'd'][category];
+        answers[categoryKey] += answer === 0 ? -1 : 1;
 
-    document.getElementById('result-type').textContent = resultTypes[type];
-    document.getElementById('result-description').innerHTML = typeDescriptions[type];
-}
-function restartTest() {
-    currentQuestion = 0;
-    answers = {a: 0, b: 0, c: 0, d: 0};
-    document.getElementById('result-container').style.display = 'none';
-    document.getElementById('start-container').style.display = 'block';
-}
-function shareResult() {
-    const testUrl = "https://doctorhollys.github.io/hardtset/"; // 실제 테스트 URL로 변경해주세요
-    const shareText = `나의 고난 유형 테스트 결과: ${document.getElementById('result-type').textContent}\n테스트 해보기: ${testUrl}`;
-    
-    // 클립보드에 복사
-    navigator.clipboard.writeText(shareText).then(function() {
-        // 복사 성공
-        document.getElementById('share-message').textContent = "테스트 링크가 복사되었어요! 자유롭게 공유해보세요!";
-        document.getElementById('share-message').style.display = 'block';
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            showQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        document.getElementById('question-container').style.display = 'none';
+        document.getElementById('result-container').style.display = 'block';
+
+        const type = (answers.a > 0 ? 'a+' : 'a-') +
+                     (answers.b > 0 ? 'b+' : 'b-') +
+                     (answers.c > 0 ? 'c+' : 'c-') +
+                     (answers.d > 0 ? 'd+' : 'd-');
+
+        const resultTypes = {
+            'a+b+c+d+': '이생망 국대',
+            'a+b+c+d-': '카톡 1 배지 수집가',
+            'a+b+c-d+': '갓생 프리터',
+            'a+b+c-d-': '짠테크 실패 전문가',
+            'a+b-c+d+': '잠수 탐지기 켜진 조장',
+            'a+b-c+d-': '자소서 문학도',
+            'a+b-c-d+': '회사 탈출 실패 백수',
+            'a+b-c-d-': '인스타 각도 고수',
+            'a-b+c+d+': '월급 3일 컷 달성러',
+            'a-b+c+d-': '메타버스 부동산 재벌',
+            'a-b+c-d+': '오늘부터 1일 전문가',
+            'a-b+c-d-': '대학 축제 조모임 창시자',
+            'a-b-c+d+': '나만 모르는 밈 제조기',
+            'a-b-c+d-': '정시 합격 논술 치트키',
+            'a-b-c-d+': '등산 전문 첫사랑 패티쉬',
+            'a-b-c-d-': '주식 손실 만회 유튜버'
+        };
+
+        document.getElementById('result-type').textContent = resultTypes[type];
+        document.getElementById('result-description').innerHTML = typeDescriptions[type];
+    }
+
+    function restartTest() {
+        currentQuestion = 0;
+        answers = {a: 0, b: 0, c: 0, d: 0};
+        document.getElementById('result-container').style.display = 'none';
+        document.getElementById('start-container').style.display = 'block';
+    }
+
+    function shareResult() {
+        const testUrl = "https://doctorhollys.github.io/hardtset/"; // 실제 테스트 URL로 변경해주세요
+        const shareText = `나의 고난 유형 테스트 결과: ${document.getElementById('result-type').textContent}\n테스트 해보기: ${testUrl}`;
         
-        // 3초 후 메시지 숨기기
-        setTimeout(function() {
-            document.getElementById('share-message').style.display = 'none';
-        }, 3000);
-    }, function(err) {
-        // 복사 실패
-        console.error('클립보드 복사 실패: ', err);
-        alert("클립보드 복사에 실패했습니다. 수동으로 복사해주세요.");
-    });
-}
+        // 클립보드에 복사
+        navigator.clipboard.writeText(shareText).then(function() {
+            // 복사 성공
+            document.getElementById('share-message').textContent = "테스트 링크가 복사되었어요! 자유롭게 공유해보세요!";
+            document.getElementById('share-message').style.display = 'block';
+            
+            // 3초 후 메시지 숨기기
+            setTimeout(function() {
+                document.getElementById('share-message').style.display = 'none';
+            }, 3000);
+        }, function(err) {
+            // 복사 실패
+            console.error('클립보드 복사 실패: ', err);
+            alert("클립보드 복사에 실패했습니다. 수동으로 복사해주세요.");
+        });
+    }
 
-function copyResult() {
-    const resultText = `나의 고난 유형 테스트 결과: ${document.getElementById('result-type').textContent}\n테스트 해보기: ${generateShareableLink()}`;
-    
-    // 클립보드에 복사
-    navigator.clipboard.writeText(resultText).then(function() {
-        // 복사 성공
-        document.getElementById('share-message').textContent = "테스트 결과가 복사되었어요! 자유롭게 공유해보세요!";
-        document.getElementById('share-message').style.display = 'block';
+    function copyResult() {
+        const resultText = `나의 고난 유형 테스트 결과: ${document.getElementById('result-type').textContent}\n테스트 해보기: ${generateShareableLink()}`;
         
-        // 3초 후 메시지 숨기기
-        setTimeout(function() {
-            document.getElementById('share-message').style.display = 'none';
-        }, 3000);
-    }, function(err) {
-        // 복사 실패
-        console.error('클립보드 복사 실패: ', err);
-        alert("클립보드 복사에 실패했습니다. 수동으로 복사해주세요.");
-    });
-}
+        // 클립보드에 복사
+        navigator.clipboard.writeText(resultText).then(function() {
+            // 복사 성공
+            document.getElementById('share-message').textContent = "테스트 결과가 복사되었어요! 자유롭게 공유해보세요!";
+            document.getElementById('share-message').style.display = 'block';
+            
+            // 3초 후 메시지 숨기기
+            setTimeout(function() {
+                document.getElementById('share-message').style.display = 'none';
+            }, 3000);
+        }, function(err) {
+            // 클립보드 복사 실패
+            console.error('클립보드 복사 실패: ', err);
+            alert("클립보드 복사에 실패했습니다. 수동으로 복사해주세요.");
+        });
+    }
 
-function generateShareableLink() {
-    const type = (answers.a > 0 ? 'a+' : 'a-') +
-                 (answers.b > 0 ? 'b+' : 'b-') +
-                 (answers.c > 0 ? 'c+' : 'c-') +
-                 (answers.d > 0 ? 'd+' : 'd-');
-    return `https://doctorhollys.github.io/hardtset/?result=${encodeURIComponent(type)}`;
-}
-
-
-    </script>
+    function generateShareableLink() {
+        const type = (answers.a > 0 ? 'a+' : 'a-') +
+                     (answers.b > 0 ? 'b+' : 'b-') +
+                     (answers.c > 0 ? 'c+' : 'c-') +
+                     (answers.d > 0 ? 'd+' : 'd-');
+        return `https://doctorhollys.github.io/hardtset/?result=${encodeURIComponent(type)}`;
+    }
+</script>
 </body>
 </html>
