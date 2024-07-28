@@ -567,7 +567,7 @@ function restartTest() {
     document.getElementById('start-container').style.display = 'block';
 }
 function shareResult() {
-    const testUrl = "https://yourwebsite.com/hardship-type-test"; // 실제 테스트 URL로 변경해주세요
+    const testUrl = "https://doctorhollys.github.io/hardtset/"; // 실제 테스트 URL로 변경해주세요
     const shareText = `나의 고난 유형 테스트 결과: ${document.getElementById('result-type').textContent}\n테스트 해보기: ${testUrl}`;
     
     // 클립보드에 복사
@@ -612,7 +612,7 @@ function generateShareableLink() {
                  (answers.b > 0 ? 'b+' : 'b-') +
                  (answers.c > 0 ? 'c+' : 'c-') +
                  (answers.d > 0 ? 'd+' : 'd-');
-    return `https://yourwebsite.com/hardship-type-test?result=${encodeURIComponent(type)}`;
+    return `https://doctorhollys.github.io/hardtset/?result=${encodeURIComponent(type)}`;
 }
 
 
