@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -25,18 +24,29 @@
             padding: 0;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
+        }
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px 0;
+            box-sizing: border-box;
         }
         .container {
             background-color: #ffffff;
             border-radius: 20px;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            padding: 40px;
+            padding: 40px 80px; /* 좌우 패딩을 2배로 증가 */
             width: 90%;
             max-width: 500px;
             text-align: center;
-            margin: 20px auto;
+            margin: 0 auto;
         }
         h1 {
             font-family: 'MangoDdobak-B', sans-serif;
@@ -101,7 +111,7 @@
         }
         @media (max-width: 600px) {
             .container {
-                padding: 20px;
+                padding: 20px 40px; /* 좌우 패딩을 2배로 증가 */
                 margin: 10px auto;
                 width: 95%;
             }
@@ -113,33 +123,43 @@
                 padding: 12px 24px;
             }
         }
+        @media (max-height: 800px) {
+            .content-wrapper {
+                padding: 10px 0;
+            }
+            .container {
+                padding: 20px 40px; /* 좌우 패딩을 2배로 증가 */
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div id="start-container">
-            <h1>고난 유형 테스트 (ver.재미)</h1>
-            <p>매일 같이 일어나는 눈 앞의 대혼돈.. 자세히 들여다보면 여기에도 나름의 재밌는 패턴들이 있습니다. 이 패턴을 읽을 수 있다면 그래도 좀 더 안락하고 재밌는 일상을 꾸려갈 수 있지 않을까요? 재미로 해보는 고난 유형 테스트! 바로 시작해보세요!</p>
-            <button class="btn" onclick="startTest()">테스트 시작</button>
+    <div class="content-wrapper">
+        <div class="container">
+            <div id="start-container">
+                <h1>고난 유형 테스트 (ver.재미)</h1>
+                <p>매일 같이 일어나는 눈 앞의 대혼돈.. 자세히 들여다보면 여기에도 나름의 재밌는 패턴들이 있습니다. 이 패턴을 읽을 수 있다면 그래도 좀 더 안락하고 재밌는 일상을 꾸려갈 수 있지 않을까요? 재미로 해보는 고난 유형 테스트! 바로 시작해보세요!</p>
+                <button class="btn" onclick="startTest()">테스트 시작</button>
+            </div>
+            <div id="question-container">
+                <div id="question-number"></div>
+                <div id="question-text"></div>
+                <button class="btn" onclick="answerQuestion(0)"></button>
+                <button class="btn" onclick="answerQuestion(1)"></button>
+            </div>
+            <div id="result-container">
+                <h1>당신의 고난 유형은..</h1>
+                <div id="result-type"></div>
+                <div id="result-description"></div>
+                <button class="btn" onclick="restartTest()">다시 해보기</button>
+                <button class="btn" onclick="shareResult()">테스트 공유하기</button>
+                <button class="btn" onclick="copyResult()">테스트 결과 공유하기</button>
+                <div id="share-message"></div>
+            </div>
         </div>
-        <div id="question-container">
-            <div id="question-number"></div>
-            <div id="question-text"></div>
-            <button class="btn" onclick="answerQuestion(0)"></button>
-            <button class="btn" onclick="answerQuestion(1)"></button>
-        </div>
-        <div id="result-container">
-            <h1>당신의 고난 유형은..</h1>
-            <div id="result-type"></div>
-            <div id="result-description"></div>
-            <button class="btn" onclick="restartTest()">다시 해보기</button>
-            <button class="btn" onclick="shareResult()">테스트 공유하기</button>
-            <button class="btn" onclick="copyResult()">테스트 결과 공유하기</button>
-            <div id="share-message"></div>
-        </div>
+        <iframe id="banner" src="https://ads-partners.coupang.com/widgets.html?id=795192&template=carousel&trackingCode=AF1644357&subId=&width=300&height=140&tsource=" width="300" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>
     </div>
-    <iframe id="banner" src="https://ads-partners.coupang.com/widgets.html?id=795192&template=carousel&trackingCode=AF1644357&subId=&width=300&height=140&tsource=" width="300" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>
-    <script>
+<script>
      const questions = [
     // 카테고리 1: 귀인 이론 (a)
     {
