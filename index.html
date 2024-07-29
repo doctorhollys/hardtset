@@ -1,101 +1,144 @@
 
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>고난 유형 테스트</title>
-<style>
-    @font-face {
-        font-family: 'Cafe24Oneprettynight';
-        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
-    body {
-        font-family: 'Cafe24Oneprettynight', Arial, sans-serif;
-        max-width: 800px;
-        margin: 50px auto 20px;
-        padding: 20px;
-        line-height: 2.0;
-        border: 1px solid #ccc;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        overflow-y: auto;
-    }
-    #question-container, #result-container {
-        display: none;
-    }
-    button {
-        margin: 8px 4px;
-        padding: 10px 20px;
-        font-size: 13px;
-        cursor: pointer;
-        font-family: 'Cafe24Oneprettynight', Arial, sans-serif;
-        font-weight: bold;
-    }
-    #banner {
-        display: block;
-        width: 100%;
-        max-width: 800px;
-        height: auto;
-        margin: 50px auto 0;
-        aspect-ratio: 800 / 140;
-    }
-    @media (max-width: 800px) {
+    <title>고난 유형 테스트</title>
+    <style>
+        @font-face {
+            font-family: 'MangoDdobak-B';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/MangoDdobak-B.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'GowunBatang-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
         body {
-            padding: 10px;
+            font-family: 'GowunBatang-Regular', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
             margin: 20px auto;
         }
-        h1, h2, h3 {
-            font-size: 1.2em;
+        h1 {
+            font-family: 'MangoDdobak-B', sans-serif;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 40px;
         }
-        button {
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+        .btn {
+            background-color: #40e0d0;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-family: 'GowunBatang-Regular', sans-serif;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 10px 0;
             width: 100%;
-            margin: 5px 0;
-            padding: 12px;
-            font-size: 14px;
         }
-        #question-number, #question-text {
-            font-size: 1em;
+        .btn:hover {
+            background-color: #38cebe;
+        }
+        #question-container, #result-container {
+            display: none;
+        }
+        #question-number {
+            font-size: 18px;
+            color: #40e0d0;
+            margin-bottom: 40px;
+        }
+        #question-text {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 40px;
+        }
+        #result-type {
+            font-size: 28px;
+            color: #008080;
+            margin-bottom: 30px;
         }
         #result-description {
-            font-size: 0.9em;
+            font-size: 16px;
+            color: #666;
+            line-height: 1.8;
+            text-align: left;
+            margin-bottom: 40px;
+        }
+        #share-message {
+            color: #4caf50;
+            margin-top: 20px;
         }
         #banner {
-            width: 95%;
-            aspect-ratio: auto;
-            height: calc(95vw * 140 / 800);
-            min-height: 60px;
-            max-height: 140px;
+            width: 300px;
+            margin-top: 20px;
         }
-    }
-</style>
-
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px auto;
+                width: 95%;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .btn {
+                font-size: 16px;
+                padding: 12px 24px;
+            }
+        }
+    </style>
 </head>
 <body>
-<h1>고난 유형 테스트 (ver.재미)</h1>
-    <div id="start-container">
-        <p>매일 같이 일어나는 눈 앞의 대혼돈.. <br>자세히 들여다보면 여기에도 나름의 재밌는 패턴들이 있습니다. 이 패턴을 읽을 수 있다면 그래도 좀 더 안락하고 재밌는 일상을 꾸려갈 수 있지 않을까요? <br> 재미로 해보는 고난 유형 테스트! 바로 시작해보세요! </p>
-        <button onclick="startTest()">테스트 시작</button>
+    <div class="container">
+        <div id="start-container">
+            <h1>고난 유형 테스트 (ver.재미)</h1>
+            <p>매일 같이 일어나는 눈 앞의 대혼돈.. 자세히 들여다보면 여기에도 나름의 재밌는 패턴들이 있습니다. 이 패턴을 읽을 수 있다면 그래도 좀 더 안락하고 재밌는 일상을 꾸려갈 수 있지 않을까요? 재미로 해보는 고난 유형 테스트! 바로 시작해보세요!</p>
+            <button class="btn" onclick="startTest()">테스트 시작</button>
+        </div>
+        <div id="question-container">
+            <div id="question-number"></div>
+            <div id="question-text"></div>
+            <button class="btn" onclick="answerQuestion(0)"></button>
+            <button class="btn" onclick="answerQuestion(1)"></button>
+        </div>
+        <div id="result-container">
+            <h1>당신의 고난 유형은..</h1>
+            <div id="result-type"></div>
+            <div id="result-description"></div>
+            <button class="btn" onclick="restartTest()">다시 해보기</button>
+            <button class="btn" onclick="shareResult()">테스트 공유하기</button>
+            <button class="btn" onclick="copyResult()">테스트 결과 공유하기</button>
+            <div id="share-message"></div>
+        </div>
     </div>
-    <div id="question-container">
-        <h2 id="question-number"></h2>
-        <p id="question-text"></p>
-        <button onclick="answerQuestion(0)"></button>
-        <button onclick="answerQuestion(1)"></button>
-    </div>
-
-<div id="result-container">
-    <h2>당신의 고난 유형은..</h2>
-    <h3 id="result-type" style="font-size: 28px; color: #333;"></h3>
-    <p id="result-description"></p>
-    <button onclick="restartTest()">다시 해보기</button>
-    <button onclick="shareResult()">테스트 공유하기</button>
-    <button onclick="copyResult()">테스트 결과 공유하기</button>
-
-    <p id="share-message" style="display: none;"></p>
-</div>
+    <iframe id="banner" src="https://ads-partners.coupang.com/widgets.html?id=795192&template=carousel&trackingCode=AF1644357&subId=&width=300&height=140&tsource=" width="300" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>
     <script>
      const questions = [
     // 카테고리 1: 귀인 이론 (a)
@@ -669,9 +712,6 @@ function generateShareableLink(type) {
     return `https://doctorhollys.github.io/hardtset/?result=${encodeURIComponent(type)}`;
 }
 
-
-</script>
+    </script>
 </body>
-<iframe src="https://ads-partners.coupang.com/widgets.html?id=795192&template=carousel&trackingCode=AF1644357&subId=&width=300&height=140&tsource=" width="300" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" browsingtopics></iframe>
-
 </html>
